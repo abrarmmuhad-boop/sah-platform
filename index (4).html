@@ -1,0 +1,2144 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة صَحّ - SAH Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00f5a0;
+            --secondary: #00d9f5;
+            --purple: #a960ee;
+            --bg-dark: #0a0e27;
+            --bg-card: rgba(255, 255, 255, 0.05);
+            --text: #ffffff;
+            --text-dim: rgba(255, 255, 255, 0.7);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Tajawal', 'Cairo', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .gradient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.3;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--secondary), transparent);
+            top: -200px;
+            right: -200px;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--primary), transparent);
+            bottom: -150px;
+            left: -150px;
+            animation-delay: -7s;
+        }
+
+        .orb-3 {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, var(--purple), transparent);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -14s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, -30px) scale(1.1); }
+        }
+
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+            opacity: 0.05;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-header {
+            text-align: center;
+            padding: 3rem 0;
+            margin-bottom: 3rem;
+            animation: fadeUp 0.8s ease;
+        }
+
+        .logo-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+
+        .logo-image {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            border: 3px solid rgba(0, 245, 160, 0.4);
+            box-shadow: 0 0 50px rgba(0, 245, 160, 0.5);
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .logo-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 160px;
+            height: 160px;
+            background: radial-gradient(circle, var(--primary), transparent);
+            border-radius: 50%;
+            filter: blur(30px);
+            opacity: 0.6;
+            z-index: -1;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 0.8; }
+        }
+
+        .hero-title {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .title-line {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: var(--text-dim);
+            letter-spacing: 2px;
+        }
+
+        .title-main {
+            font-size: clamp(4rem, 10vw, 7rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            filter: drop-shadow(0 0 30px rgba(0, 245, 160, 0.3));
+        }
+
+        .title-subtitle {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            letter-spacing: 3px;
+            font-weight: 400;
+        }
+
+        .hero-tagline {
+            font-size: 1.3rem;
+            color: var(--text-dim);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+
+        .tagline-icon {
+            animation: sparkle 1.5s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            padding: 1.5rem;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            margin-top: 0.3rem;
+        }
+
+        .stat-divider {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.2), transparent);
+        }
+
+        .nav-pills {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+            padding: 0.8rem;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeUp 0.8s ease 0.2s both;
+        }
+
+        .nav-pill {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            background: transparent;
+            color: var(--text-dim);
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: inherit;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-pill:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text);
+        }
+
+        .nav-pill.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--bg-dark);
+            box-shadow: 0 0 30px rgba(0, 245, 160, 0.4);
+        }
+
+        .pill-icon {
+            font-size: 1.3rem;
+        }
+
+        .section-container {
+            display: none;
+            animation: fadeUp 0.6s ease;
+        }
+
+        .section-container.active {
+            display: block;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .back-btn {
+            padding: 0.8rem 1.5rem;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .section-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-icon {
+            font-size: 2.5rem;
+            filter: drop-shadow(0 0 20px rgba(0, 245, 160, 0.5));
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-card {
+            position: relative;
+            padding: 2.5rem;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: fadeUp 0.8s ease;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 245, 160, 0.3);
+            border-color: rgba(0, 245, 160, 0.3);
+        }
+
+        .feature-card:hover::before {
+            opacity: 0.05;
+        }
+
+        .card-purple:hover {
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 40px rgba(169, 96, 238, 0.3);
+        }
+
+        .card-glow {
+            position: absolute;
+            top: 10%;
+            right: 10%;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, var(--primary), transparent);
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .feature-card:hover .card-glow {
+            opacity: 0.4;
+        }
+
+        .card-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 10px 20px rgba(0, 245, 160, 0.3));
+            animation: iconFloat 2s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-description {
+            font-size: 1.05rem;
+            color: var(--text-dim);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tag {
+            padding: 0.4rem 0.9rem;
+            background: rgba(0, 245, 160, 0.1);
+            border: 1px solid rgba(0, 245, 160, 0.3);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .card-button {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 12px;
+            color: var(--bg-dark);
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 245, 160, 0.4);
+        }
+
+        .info-box {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(0, 217, 245, 0.1), rgba(0, 245, 160, 0.1));
+            border: 1px solid rgba(0, 217, 245, 0.3);
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            animation: fadeUp 0.8s ease 0.4s both;
+        }
+
+        .info-icon {
+            font-size: 2.5rem;
+            flex-shrink: 0;
+        }
+
+        .info-content h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+
+        .info-content p {
+            color: var(--text-dim);
+            line-height: 1.7;
+        }
+
+        .warning-box {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(254, 202, 87, 0.1));
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            animation: fadeUp 0.8s ease 0.6s both;
+        }
+
+        .warning-icon {
+            font-size: 1.8rem;
+            flex-shrink: 0;
+        }
+
+        .warning-content h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #feca57;
+        }
+
+        .warning-content p {
+            color: var(--text-dim);
+            line-height: 1.7;
+        }
+
+        .tip-box {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            margin-bottom: 2rem;
+        }
+
+        .tip-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .tip-box h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .tip-box p {
+            color: var(--text-dim);
+            line-height: 1.7;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .badge {
+            padding: 0.25rem 0.7rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .badge.required {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--bg-dark);
+        }
+
+        .badge.optional {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-dim);
+        }
+
+        .value-badge {
+            padding: 0.3rem 0.9rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--bg-dark);
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 1rem;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 245, 160, 0.1), 0 0 20px rgba(0, 245, 160, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .form-input::placeholder,
+        .form-textarea::placeholder {
+            color: var(--text-dim);
+        }
+
+        .form-slider {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            outline: none;
+            border-radius: 3px;
+            -webkit-appearance: none;
+            cursor: pointer;
+        }
+
+        .form-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 245, 160, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .form-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 30px rgba(0, 245, 160, 0.7);
+        }
+
+        .form-slider::-moz-range-thumb {
+            width: 22px;
+            height: 22px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 245, 160, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .form-slider::-moz-range-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 30px rgba(0, 245, 160, 0.7);
+        }
+
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            cursor: pointer;
+            padding: 0.8rem;
+            border-radius: 12px;
+            transition: background 0.3s ease;
+        }
+
+        .checkbox-label:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            display: none;
+        }
+
+        .checkbox-box {
+            width: 22px;
+            height: 22px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 6px;
+            position: relative;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .checkbox-label input[type="checkbox"]:checked + .checkbox-box {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-color: transparent;
+        }
+
+        .checkbox-label input[type="checkbox"]:checked + .checkbox-box::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--bg-dark);
+            font-weight: 900;
+            font-size: 13px;
+        }
+
+        .chip-input {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .chip-btn {
+            padding: 1rem 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 12px;
+            color: var(--bg-dark);
+            font-size: 0.95rem;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .chip-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 245, 160, 0.3);
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .chip {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            background: rgba(0, 245, 160, 0.1);
+            border: 1px solid rgba(0, 245, 160, 0.3);
+            border-radius: 20px;
+            font-weight: 600;
+            color: var(--primary);
+            animation: chipIn 0.3s ease;
+        }
+
+        @keyframes chipIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .chip button {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+        }
+
+        .chip button:hover {
+            transform: scale(1.3);
+        }
+
+        .primary-btn {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            width: 100%;
+            padding: 1.2rem;
+            border: none;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--bg-dark);
+            font-size: 1.2rem;
+            font-weight: 800;
+            font-family: inherit;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 40px rgba(0, 245, 160, 0.3);
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 60px rgba(0, 245, 160, 0.5);
+        }
+
+        .primary-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-icon {
+            font-size: 1.5rem;
+        }
+
+        .status-msg {
+            padding: 1rem;
+            margin: 1.5rem 0;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--text-dim);
+            font-weight: 600;
+            text-align: center;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .status-msg.error {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(254, 202, 87, 0.1));
+            border-color: rgba(255, 107, 107, 0.3);
+            color: #ff6b6b;
+        }
+
+        .status-msg.success {
+            background: linear-gradient(135deg, rgba(17, 153, 142, 0.1), rgba(56, 239, 125, 0.1));
+            border-color: rgba(0, 245, 160, 0.3);
+            color: var(--primary);
+        }
+
+        .error-details {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        .retry-btn {
+            padding: 0.6rem 1.2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+        }
+
+        .retry-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .result-box {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            animation: slideUp 0.6s ease;
+        }
+
+        .result-box.hidden {
+            display: none;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .result-badge {
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 800;
+            font-size: 1rem;
+            animation: badgeIn 0.5s ease;
+        }
+
+        @keyframes badgeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .result-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 16px;
+            border-right: 4px solid var(--primary);
+        }
+
+        .result-section.highlight {
+            background: linear-gradient(135deg, rgba(0, 245, 160, 0.1), rgba(0, 217, 245, 0.1));
+            border-right-color: var(--secondary);
+        }
+
+        .result-section h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .result-section h3 span {
+            font-size: 1.8rem;
+        }
+
+        .result-section p {
+            color: var(--text-dim);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .big-text {
+            font-size: 1.3rem !important;
+            font-weight: 700 !important;
+            color: var(--text) !important;
+        }
+
+        .plan-grid,
+        .trigger-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .dayCard,
+        .trCard {
+            padding: 1.5rem;
+            background: rgba(0, 245, 160, 0.05);
+            border: 1px solid rgba(0, 245, 160, 0.2);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            animation: cardIn 0.5s ease;
+        }
+
+        @keyframes cardIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dayCard:hover,
+        .trCard:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 245, 160, 0.2);
+        }
+
+        .dayCard h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .dayCard ul {
+            margin: 0.8rem 0;
+            padding-right: 1.5rem;
+            color: var(--text-dim);
+        }
+
+        .dayCard li {
+            margin: 0.5rem 0;
+            line-height: 1.6;
+        }
+
+        .dayCard .tip {
+            margin-top: 1rem;
+            padding: 0.8rem;
+            background: rgba(0, 245, 160, 0.1);
+            border-right: 3px solid var(--primary);
+            border-radius: 4px;
+        }
+
+        .trCard p {
+            margin: 0.8rem 0;
+            line-height: 1.7;
+            color: var(--text-dim);
+        }
+
+        .trCard strong {
+            color: var(--text);
+        }
+
+        .json-details {
+            margin-top: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .json-details summary {
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-dim);
+            transition: all 0.3s ease;
+        }
+
+        .json-details summary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text);
+        }
+
+        .json-details pre {
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--primary);
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 500px;
+            width: 90%;
+            background: var(--bg-dark);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: modalIn 0.4s ease;
+        }
+
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-icon {
+            font-size: 2.5rem;
+        }
+
+        .modal-header h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .modal-content p {
+            color: var(--text-dim);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .modal-hint {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            margin-top: 1rem;
+        }
+
+        .modal-hint a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .modal-hint a:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            margin-top: 3rem;
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer p {
+            color: var(--text-dim);
+            margin: 0.5rem 0;
+        }
+
+        .footer-small {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .stat-divider {
+                width: 60%;
+                height: 1px;
+            }
+
+            .nav-pills {
+                flex-direction: column;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .checkbox-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chip-input {
+                flex-direction: column;
+            }
+
+            .plan-grid,
+            .trigger-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+    <div class="noise-overlay"></div>
+
+    <main class="container">
+        <header class="hero-header">
+            <div class="logo-container">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f5a0'/%3E%3Cstop offset='100%25' style='stop-color:%2300d9f5'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='100' cy='100' r='90' fill='url(%23g)'/%3E%3Ctext x='100' y='130' font-size='100' font-weight='900' text-anchor='middle' fill='%23fff'%3Eصَ%3C/text%3E%3C/svg%3E" alt="شعار صح" class="logo-image">
+                <div class="logo-glow"></div>
+            </div>
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="title-line">منصة</span>
+                    <span class="title-main">صَحّ</span>
+                    <span class="title-subtitle">SAH PLATFORM</span>
+                </h1>
+                <p class="hero-tagline">
+                    <span class="tagline-icon">✨</span>
+                    التوعية الصحية بالذكاء الاصطناعي
+                    <span class="tagline-icon">✨</span>
+                </p>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">2</div>
+                        <div class="stat-label">خدمات ذكية</div>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <div class="stat-number">AI</div>
+                        <div class="stat-label">مدعوم بـ Gemini</div>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">متاح دائماً</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <nav class="nav-pills">
+            <button class="nav-pill active" onclick="showSection('homeSection')">
+                <span class="pill-icon">🏠</span>
+                <span class="pill-text">الرئيسية</span>
+            </button>
+            <button class="nav-pill" onclick="showSection('rumorSection')">
+                <span class="pill-icon">🧠</span>
+                <span class="pill-text">كاشف الشائعات</span>
+            </button>
+            <button class="nav-pill" onclick="showSection('coSection')">
+                <span class="pill-icon">💨</span>
+                <span class="pill-text">خطة الإقلاع</span>
+            </button>
+        </nav>
+
+        <section id="homeSection" class="section-container active">
+            <div class="features-grid">
+                <div class="feature-card card-purple" onclick="showSection('rumorSection')">
+                    <div class="card-glow"></div>
+                    <div class="card-icon">🧠</div>
+                    <h2 class="card-title">كاشف الشائعات</h2>
+                    <p class="card-description">
+                        تحقق من صحة أي معلومة صحية باستخدام الذكاء الاصطناعي المتقدم
+                    </p>
+                    <div class="card-tags">
+                        <span class="tag">تحليل فوري</span>
+                        <span class="tag">دقة عالية</span>
+                        <span class="tag">مصادر موثوقة</span>
+                    </div>
+                    <button class="card-button">ابدأ الفحص ←</button>
+                </div>
+
+                <div class="feature-card card-green" onclick="showSection('coSection')">
+                    <div class="card-glow"></div>
+                    <div class="card-icon">💨</div>
+                    <h2 class="card-title">خطة الإقلاع عن التدخين</h2>
+                    <p class="card-description">
+                        احصل على خطة شخصية ومتدرجة للإقلاع عن التدخين بناءً على حالتك
+                    </p>
+                    <div class="card-tags">
+                        <span class="tag">خطة مخصصة</span>
+                        <span class="tag">متابعة أسبوعية</span>
+                        <span class="tag">نصائح عملية</span>
+                    </div>
+                    <button class="card-button">ابدأ الآن ←</button>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <div class="info-icon">ℹ️</div>
+                <div class="info-content">
+                    <h3>نبذة عن المنصة</h3>
+                    <p>منصة صَحّ هي أداة توعية صحية مدعومة بالذكاء الاصطناعي. نستخدم تقنيات Gemini المتقدمة لتقديم معلومات صحية دقيقة وموثوقة.</p>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <div class="warning-icon">⚠️</div>
+                <div class="warning-content">
+                    <h3>تنبيه مهم</h3>
+                    <p>هذه المنصة للتوعية الصحية فقط وليست بديلاً عن الاستشارة الطبية المتخصصة. في حالات الطوارئ، يرجى مراجعة الطبيب فوراً.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="rumorSection" class="section-container">
+            <div class="section-header">
+                <button class="back-btn" onclick="showSection('homeSection')">← رجوع</button>
+                <div class="section-title-wrap">
+                    <span class="section-icon">🧠</span>
+                    <h2 class="section-title">كاشف الشائعات الصحية</h2>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <span class="tip-icon">💡</span>
+                <div>
+                    <h4>كيف تستخدم الأداة؟</h4>
+                    <p>اكتب أو الصق أي معلومة صحية تريد التحقق منها، وسيقوم الذكاء الاصطناعي بتحليلها.</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">
+                    <span>المعلومة أو الإشاعة الصحية</span>
+                    <span class="badge required">مطلوب</span>
+                </label>
+                <textarea id="rumorText" class="form-textarea" rows="6" placeholder="مثال: الزنجبيل يعالج السرطان نهائياً..."></textarea>
+            </div>
+
+            <button class="primary-btn" onclick="checkRumor()">
+                <span class="btn-icon">🔍</span>
+                <span>فحص الإشاعة بالذكاء الاصطناعي</span>
+            </button>
+
+            <div id="rumorStatus" class="status-msg"></div>
+
+            <div id="rumorResultBox" class="result-box hidden">
+                <div class="result-badges">
+                    <div id="rumorVerdict" class="result-badge"></div>
+                    <div id="rumorRisk" class="result-badge"></div>
+                </div>
+
+                <div class="result-section">
+                    <h3><span>📊</span> التفسير</h3>
+                    <p id="rumorExplanation"></p>
+                </div>
+
+                <div class="result-section">
+                    <h3><span>✅</span> التصحيح</h3>
+                    <p id="rumorCorrection"></p>
+                </div>
+
+                <div class="result-section">
+                    <h3><span>💡</span> نصيحة آمنة</h3>
+                    <p id="rumorAdvice"></p>
+                </div>
+
+                <details class="json-details">
+                    <summary>عرض البيانات الكاملة (JSON)</summary>
+                    <pre id="rumorRaw"></pre>
+                </details>
+            </div>
+        </section>
+
+        <section id="coSection" class="section-container">
+            <div class="section-header">
+                <button class="back-btn" onclick="showSection('homeSection')">← رجوع</button>
+                <div class="section-title-wrap">
+                    <span class="section-icon">💨</span>
+                    <h2 class="section-title">خطة الإقلاع عن التدخين</h2>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <span class="tip-icon">💡</span>
+                <div>
+                    <h4>كيف تعمل الأداة؟</h4>
+                    <p>أدخل بياناتك الشخصية وعادات التدخين، وسيقوم الذكاء الاصطناعي بإنشاء خطة مخصصة لك.</p>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label class="form-label">
+                        <span>العمر</span>
+                        <span class="badge required">مطلوب</span>
+                    </label>
+                    <input type="number" id="age" class="form-input" min="10" max="90" value="25" placeholder="أدخل عمرك">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <span>عدد السجائر يومياً</span>
+                        <span class="badge required">مطلوب</span>
+                    </label>
+                    <input type="number" id="cigs" class="form-input" min="0" max="60" value="10" placeholder="عدد السجائر">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <span>سنوات التدخين</span>
+                        <span class="badge required">مطلوب</span>
+                    </label>
+                    <input type="number" id="years" class="form-input" min="0" max="70" value="5" placeholder="كم سنة">
+                </div>
+
+                <div class="form-group full-width">
+                    <label class="form-label">
+                        <span>نسبة أول أكسيد الكربون (CO)</span>
+                        <span class="value-badge" id="coVal">15</span>
+                        <span>ppm</span>
+                    </label>
+                    <input type="range" id="co" class="form-slider" min="0" max="50" value="15">
+                </div>
+
+                <div class="form-group full-width">
+                    <label class="form-label">
+                        <span>مستوى الحافز للإقلاع</span>
+                        <span class="value-badge" id="motVal">7</span>
+                        <span>/ 10</span>
+                    </label>
+                    <input type="range" id="motivation" class="form-slider" min="1" max="10" value="7">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">
+                    <span>متى تدخن عادة؟</span>
+                    <span class="badge optional">اختياري</span>
+                </label>
+                <div class="checkbox-grid">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="tr" value="morning coffee" checked>
+                        <span class="checkbox-box"></span>
+                        <span>قهوة الصباح</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="tr" value="work stress" checked>
+                        <span class="checkbox-box"></span>
+                        <span>ضغط العمل</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="tr" value="after meals">
+                        <span class="checkbox-box"></span>
+                        <span>بعد الأكل</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="tr" value="friends">
+                        <span class="checkbox-box"></span>
+                        <span>مع الأصدقاء</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">
+                    <span>الأعراض التي تعاني منها</span>
+                    <span class="badge optional">اختياري</span>
+                </label>
+                <textarea id="symptoms" class="form-textarea" rows="3" placeholder="مثال: صداع، كحة، ضيق نفس..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">
+                    <span>عوامل إضافية</span>
+                    <span class="badge optional">اختياري</span>
+                </label>
+                <div class="chip-input">
+                    <input type="text" id="factorInput" class="form-input" placeholder="اكتب عامل واضغط إضافة">
+                    <button class="chip-btn" onclick="addFactor()">+ إضافة</button>
+                </div>
+                <div id="factorChips" class="chips"></div>
+            </div>
+
+            <button class="primary-btn" onclick="analyzeCO()">
+                <span class="btn-icon">🚀</span>
+                <span>إنشاء خطتي للإقلاع</span>
+            </button>
+
+            <div id="coStatus" class="status-msg"></div>
+
+            <div id="coResultBox" class="result-box hidden">
+                <div class="result-badges">
+                    <div id="coRiskBadge" class="result-badge"></div>
+                    <div id="coVerdictBadge" class="result-badge"></div>
+                </div>
+
+                <div class="result-section">
+                    <h3><span>📋</span> ملخص الحالة</h3>
+                    <p id="coSummary"></p>
+                </div>
+
+                <div class="result-section">
+                    <h3><span>🔍</span> تحليل شخصي</h3>
+                    <p id="coInsight"></p>
+                </div>
+
+                <div class="result-section highlight">
+                    <h3><span>📅</span> مدة الخطة</h3>
+                    <p id="coStrategy" class="big-text"></p>
+                </div>
+
+                <div class="result-section">
+                    <h3><span>📊</span> الخطة الأسبوعية</h3>
+                    <div id="coPlanGrid" class="plan-grid"></div>
+                </div>
+
+                <div class="result-section">
+                    <h3><span>🎯</span> استراتيجيات المحفزات</h3>
+                    <div id="coTriggerGrid" class="trigger-grid"></div>
+                </div>
+
+                <details class="json-details">
+                    <summary>عرض البيانات الكاملة (JSON)</summary>
+                    <pre id="coRaw"></pre>
+                </details>
+
+                <div class="warning-box">
+                    <div class="warning-icon">⚠️</div>
+                    <div class="warning-content">
+                        <h3>تنبيه صحي</h3>
+                        <p>إذا شعرت بألم في الصدر أو ضيق تنفس شديد، راجع الطوارئ فوراً. هذه الخطة للتوعية فقط.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>منصة صَحّ (SAH) • مشروع توعية صحية بالذكاء الاصطناعي</p>
+            <p class="footer-small">Powered by Gemini AI • 2025</p>
+        </footer>
+    </main>
+
+    <div id="apiModal" class="modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-icon">⚙️</span>
+                <h2>إعداد الذكاء الاصطناعي</h2>
+            </div>
+            <p>لتفعيل الميزات الذكية، أدخل مفتاح Gemini API:</p>
+            <div class="form-group">
+                <input type="text" id="apiKeyInput" class="form-input" placeholder="AIzaSy... أدخل المفتاح هنا">
+            </div>
+            <p class="modal-hint">
+                احصل على مفتاح مجاني من 
+                <a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio ↗</a>
+                <br><small style="color: #feca57; margin-top: 0.5rem; display: block;">⚠️ تأكد من إنشاء مفتاح جديد خاص بك</small>
+            </p>
+            <button class="primary-btn" onclick="saveApiKey()" style="margin-bottom: 0.8rem;">
+                💾 حفظ وتفعيل
+            </button>
+            <button class="primary-btn" onclick="resetApiKey()" style="background: linear-gradient(135deg, #ff6b6b, #feca57);">
+                🗑️ حذف المفتاح القديم
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let GEMINI_API_KEY = localStorage.getItem('gemini_api_key') || null;
+        let extraFactors = [];
+        let chosenModelName = null;
+
+        function $(id) { return document.getElementById(id); }
+
+        function escapeHtml(str) {
+            return String(str ?? "")
+                .replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll('"', "&quot;")
+                .replaceAll("'", "&#039;");
+        }
+
+        function safeParseJSON(text) {
+            const s = text.indexOf("{");
+            const e = text.lastIndexOf("}");
+            if (s === -1 || e === -1) {
+                throw new Error("الذكاء الاصطناعي لم يرجع JSON صحيح");
+            }
+            return JSON.parse(text.slice(s, e + 1));
+        }
+
+        function checkApiKey() {
+            if (!GEMINI_API_KEY) {
+                $("apiModal").style.display = "flex";
+                return false;
+            }
+            return true;
+        }
+
+        function saveApiKey() {
+            const key = $("apiKeyInput").value.trim();
+            if (!key) {
+                alert("⚠️ يرجى إدخال مفتاح API");
+                return;
+            }
+            
+            if (!key.startsWith('AIzaSy')) {
+                alert("⚠️ المفتاح يجب أن يبدأ بـ AIzaSy\nتأكد من نسخ المفتاح كاملاً");
+                return;
+            }
+            
+            GEMINI_API_KEY = key;
+            localStorage.setItem('gemini_api_key', key);
+            $("apiModal").style.display = "none";
+            alert("✅ تم حفظ المفتاح بنجاح!\nجرب استخدام المنصة الآن");
+        }
+
+        function resetApiKey() {
+            if (confirm("هل أنت متأكد من حذف المفتاح المحفوظ؟")) {
+                localStorage.removeItem('gemini_api_key');
+                GEMINI_API_KEY = null;
+                chosenModelName = null;
+                $("apiKeyInput").value = "";
+                alert("✅ تم حذف المفتاح القديم!\nالآن أدخل مفتاح جديد من Google AI Studio");
+            }
+        }
+
+        window.saveApiKey = saveApiKey;
+        window.resetApiKey = resetApiKey;
+
+        function showSection(sectionId) {
+            ["homeSection", "coSection", "rumorSection"].forEach(id => {
+                $(id).classList.remove("active");
+            });
+            
+            $(sectionId).classList.add("active");
+            
+            const pills = document.querySelectorAll('.nav-pill');
+            pills.forEach(pill => pill.classList.remove('active'));
+            
+            if (sectionId === "homeSection") {
+                pills[0].classList.add("active");
+            } else if (sectionId === "rumorSection") {
+                pills[1].classList.add("active");
+                $("rumorStatus").textContent = "";
+                $("rumorStatus").className = "status-msg";
+            } else if (sectionId === "coSection") {
+                pills[2].classList.add("active");
+                $("coStatus").textContent = "";
+                $("coStatus").className = "status-msg";
+            }
+            
+            window.scrollTo(0, 0);
+        }
+
+        window.showSection = showSection;
+
+        $("co").addEventListener("input", () => {
+            $("coVal").textContent = $("co").value;
+        });
+
+        $("motivation").addEventListener("input", () => {
+            $("motVal").textContent = $("motivation").value;
+        });
+
+        function renderFactors() {
+            const box = $("factorChips");
+            box.innerHTML = "";
+            
+            extraFactors.forEach((f, idx) => {
+                const div = document.createElement("div");
+                div.className = "chip";
+                div.innerHTML = `${escapeHtml(f)} <button type="button">×</button>`;
+                div.querySelector("button").onclick = () => {
+                    extraFactors.splice(idx, 1);
+                    renderFactors();
+                };
+                box.appendChild(div);
+            });
+        }
+
+        function addFactor() {
+            const inp = $("factorInput");
+            const v = (inp.value || "").trim();
+            if (!v) return;
+            
+            extraFactors.push(v);
+            inp.value = "";
+            renderFactors();
+        }
+
+        window.addFactor = addFactor;
+
+        function getCheckedTriggers() {
+            return Array.from(document.querySelectorAll('input[name="tr"]:checked'))
+                .map(x => x.value);
+        }
+
+        function readCOForm() {
+            return {
+                co_ppm_reading: Number($("co").value),
+                age: Number($("age").value),
+                daily_cigarette_count: Number($("cigs").value),
+                years_smoked: Number($("years").value),
+                motivation_level: Number($("motivation").value),
+                primary_triggers: getCheckedTriggers(),
+                extra_factors: extraFactors,
+                symptoms: $("symptoms").value.trim()
+            };
+        }
+
+        async function pickModelIfNeeded() {
+            if (chosenModelName) return chosenModelName;
+
+            if (!GEMINI_API_KEY) {
+                throw new Error("يرجى إدخال مفتاح Gemini API أولاً");
+            }
+
+            const url = `https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(GEMINI_API_KEY)}`;
+            
+            try {
+                const res = await fetch(url);
+                if (!res.ok) {
+                    if (res.status === 400) {
+                        throw new Error("مفتاح API غير صحيح أو منتهي الصلاحية");
+                    }
+                    throw new Error(`خطأ في الاتصال: ${res.status}`);
+                }
+
+                const data = await res.json();
+                const models = data.models || [];
+
+                const supportsGenerate = (m) => 
+                    (m.supportedGenerationMethods || []).includes("generateContent");
+
+                const flash = models.find(m => 
+                    supportsGenerate(m) && String(m.name).includes("flash")
+                );
+                const any = models.find(m => supportsGenerate(m));
+
+                const chosen = flash || any;
+                if (!chosen) {
+                    throw new Error("لم يتم العثور على موديل متاح");
+                }
+
+                chosenModelName = chosen.name;
+                return chosenModelName;
+            } catch (error) {
+                if (error.message.includes("Failed to fetch")) {
+                    throw new Error("تعذر الاتصال بالإنترنت");
+                }
+                throw error;
+            }
+        }
+
+        async function callGemini(promptText) {
+            const modelName = await pickModelIfNeeded();
+            const url = `https://generativelanguage.googleapis.com/v1beta/${modelName}:generateContent?key=${encodeURIComponent(GEMINI_API_KEY)}`;
+
+            const body = {
+                contents: [{ role: "user", parts: [{ text: promptText }] }],
+                generationConfig: { 
+                    temperature: 0.7, 
+                    maxOutputTokens: 4096
+                }
+            };
+
+            try {
+                const res = await fetch(url, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body)
+                });
+
+                if (!res.ok) {
+                    const errorText = await res.text();
+                    console.error('API Error:', errorText);
+                    
+                    if (res.status === 400) {
+                        throw new Error("مفتاح API غير صالح - احصل على مفتاح جديد");
+                    } else if (res.status === 429) {
+                        throw new Error("تم تجاوز الحد - انتظر دقيقة وحاول مرة أخرى");
+                    } else if (res.status === 403) {
+                        throw new Error("المفتاح غير مفعّل - تحقق من Google AI Studio");
+                    }
+                    throw new Error(`خطأ ${res.status}: ${errorText.substring(0, 100)}`);
+                }
+
+                const data = await res.json();
+                console.log('API Response:', data);
+                
+                const text = data?.candidates?.[0]?.content?.parts
+                    ?.map(p => p.text)
+                    .join("") || "";
+                    
+                if (!text.trim()) {
+                    throw new Error("رد فارغ من الذكاء الاصطناعي");
+                }
+                
+                console.log('Response text:', text);
+                return text;
+            } catch (error) {
+                if (error.message.includes("Failed to fetch")) {
+                    throw new Error("تعذر الاتصال - تحقق من الإنترنت");
+                }
+                throw error;
+            }
+        }
+
+        function buildRumorPrompt(claim) {
+            return `You are a health expert. Analyze this health claim in Arabic:
+
+"${claim}"
+
+Return ONLY valid JSON (no markdown, no extra text):
+{
+  "verdict": "True",
+  "risk_level": "Low",
+  "explanation_simple": "شرح واضح ومختصر بالعربي عن صحة أو خطأ هذه المعلومة في جملتين فقط",
+  "correction": "التصحيح العلمي الدقيق للمعلومة مع ذكر الحقائق الصحيحة",
+  "advice": "نصيحة طبية آمنة وعملية يمكن اتباعها",
+  "disclaimer": "تنبيه: استشر طبيبك المختص دائماً قبل اتخاذ أي قرار صحي"
+}
+
+Note: verdict can be "True", "False", "Misleading", or "Unclear"
+Note: risk_level can be "Low", "Moderate", or "High"`.trim();
+        }
+
+        function showError(statusElement, message, details = "") {
+            statusElement.className = "status-msg error";
+            statusElement.innerHTML = `
+                <div>❌ ${escapeHtml(message)}</div>
+                ${details ? `<div class="error-details">${escapeHtml(details)}</div>` : ''}
+                <button class="retry-btn" onclick="resetApiKey()">إعادة تعيين المفتاح</button>
+            `;
+        }
+
+        function renderCOAI(out) {
+            $("coResultBox").classList.remove("hidden");
+
+            const riskColors = {
+                "Low": "background: linear-gradient(135deg, #11998e, #38ef7d); color: #0a0e27;",
+                "Moderate": "background: linear-gradient(135deg, #ff6b6b, #feca57); color: #0a0e27;",
+                "High": "background: linear-gradient(135deg, #ff0844, #ff6b6b); color: white;"
+            };
+            
+            const riskBadge = $("coRiskBadge");
+            riskBadge.textContent = `الخطورة: ${out.risk_level || "—"}`;
+            riskBadge.setAttribute('style', riskColors[out.risk_level] || "");
+            
+            $("coVerdictBadge").textContent = `الحالة: ${out.verdict_label || "—"}`;
+            $("coVerdictBadge").setAttribute('style', 'background: linear-gradient(135deg, #00f5a0, #00d9f5); color: #0a0e27;');
+
+            $("coSummary").textContent = out.summary || "";
+            $("coInsight").textContent = out.personalized_insights || "";
+
+            const dur = out.recommended_duration_days ?? "—";
+            const qd = out.quit_day ?? "—";
+            $("coStrategy").textContent = `المدة المقترحة: ${dur} يوم • يوم الإقلاع: اليوم ${qd}`;
+
+            const plan = $("coPlanGrid");
+            plan.innerHTML = "";
+            
+            (out.taper_plan_weeks || []).forEach(w => {
+                const div = document.createElement("div");
+                div.className = "dayCard";
+                div.innerHTML = `
+                    <h4>الأسبوع ${escapeHtml(w.week)} — الهدف: ${escapeHtml(w.target_cigarettes_per_day)} سيجارة/يوم</h4>
+                    <div>
+                        <strong>الأهداف:</strong>
+                        <ul>${(w.goals || []).map(g => `<li>${escapeHtml(g)}</li>`).join("")}</ul>
+                    </div>
+                    <div>
+                        <strong>الإجراءات:</strong>
+                        <ul>${(w.actions || []).map(a => `<li>${escapeHtml(a)}</li>`).join("")}</ul>
+                    </div>
+                    <p class="tip"><strong>💡 نصيحة:</strong> ${escapeHtml(w.tip || "")}</p>
+                `;
+                plan.appendChild(div);
+            });
+
+            const tg = $("coTriggerGrid");
+            tg.innerHTML = "";
+            
+            (out.trigger_coping_strategies || []).forEach(t => {
+                const div = document.createElement("div");
+                div.className = "trCard";
+                div.innerHTML = `
+                    <p><strong>🎯 المحفز:</strong> ${escapeHtml(t.trigger)}</p>
+                    <p><strong>🔄 البديل:</strong> ${escapeHtml(t.replacement)}</p>
+                    <p><strong>⚡ إجراء سريع:</strong> ${escapeHtml(t.quick_action)}</p>
+                `;
+                tg.appendChild(div);
+            });
+
+            $("coRaw").textContent = JSON.stringify(out, null, 2);
+        }
+
+        function analyzeCO() {
+            $("coStatus").textContent = "";
+            $("coStatus").className = "status-msg";
+            $("coResultBox").classList.add("hidden");
+
+            const user = readCOForm();
+            
+            if (user.age < 10 || user.age > 90) {
+                $("coStatus").className = "status-msg error";
+                $("coStatus").textContent = "⚠️ يرجى إدخال عمر صحيح (10-90)";
+                return;
+            }
+
+            $("coStatus").className = "status-msg";
+            $("coStatus").textContent = "🔄 جاري تحليل حالتك...";
+
+            setTimeout(() => {
+                const cigs = user.daily_cigarette_count;
+                const years = user.years_smoked;
+                const co = user.co_ppm_reading;
+                
+                let risk, verdict, summary, insights, duration, quitDay, plan;
+                
+                // منطق التحليل البسيط
+                if (cigs === 0 && years === 0) {
+                    risk = "Low";
+                    verdict = "غير مدخن";
+                    summary = "رئتاك في أفضل حالاتها، ومعدل ضربات قلبك طبيعي.";
+                    insights = "أنت تعيش نمط حياة صحي، حافظ عليه وكن ملهماً لغيرك.";
+                    duration = 0;
+                    quitDay = 0;
+                    plan = [];
+                } else if (co > 25 || (cigs > 20 && years > 10)) {
+                    risk = "High";
+                    verdict = "مدخن شره - خطر عالي";
+                    summary = "تراكم النيكوتين والقطران عالي جداً. نسبة أول أكسيد الكربون تمنع وصول الأكسجين الكافي للدماغ.";
+                    insights = "حالتك تتطلب تدخلاً فورياً. الإقلاع عن التدخين الآن سيحسن صحتك بشكل كبير.";
+                    duration = 56;
+                    quitDay = 42;
+                    plan = generateTaperPlan(cigs, 8);
+                } else if (cigs > 10 || co > 10) {
+                    risk = "Moderate";
+                    verdict = "مدخن متوسط";
+                    summary = "بدء تضرر الشعيرات التنفسية. قد تلاحظ ضيق تنفس عند المجهود البدني البسيط.";
+                    insights = "الوقت مناسب للإقلاع. كلما بدأت مبكراً، كان التعافي أسرع وأسهل.";
+                    duration = 42;
+                    quitDay = 30;
+                    plan = generateTaperPlan(cigs, 6);
+                } else {
+                    risk = "Low";
+                    verdict = "مدخن خفيف";
+                    summary = "تأثيرات كيميائية أولية على جدران الشرايين. التوقف الآن يضمن عودة الرئة لحالتها الطبيعية سريعاً.";
+                    insights = "أنت في مرحلة مبكرة. الإقلاع الآن سيكون أسهل وأقل تحدياً من المراحل المتقدمة.";
+                    duration = 21;
+                    quitDay = 14;
+                    plan = generateTaperPlan(cigs, 3);
+                }
+                
+                const result = {
+                    risk_level: risk,
+                    verdict_label: verdict,
+                    summary: summary,
+                    personalized_insights: insights,
+                    recommended_duration_days: duration,
+                    quit_day: quitDay,
+                    taper_plan_weeks: plan,
+                    trigger_coping_strategies: generateTriggerStrategies(user.primary_triggers),
+                    motivational_message: "رحلة الألف ميل تبدأ بخطوة. قرارك بالإقلاع اليوم هو أفضل استثمار في صحتك ومستقبلك!",
+                    disclaimer: "هذه الخطة للتوعية الصحية فقط. في حالة الأعراض الشديدة، راجع طبيبك فوراً."
+                };
+                
+                renderCOAI(result);
+                $("coStatus").className = "status-msg success";
+                $("coStatus").textContent = "✅ تم تحليل حالتك وإنشاء الخطة!";
+            }, 800);
+        }
+        
+        function generateTaperPlan(startCigs, weeks) {
+            const plan = [];
+            for (let i = 1; i <= weeks; i++) {
+                const targetCigs = Math.max(0, Math.floor(startCigs * (1 - (i / (weeks + 1)))));
+                plan.push({
+                    week: i,
+                    target_cigarettes_per_day: targetCigs,
+                    goals: [
+                        `تقليل عدد السجائر إلى ${targetCigs} سيجارة يومياً`,
+                        "الالتزام بجدول زمني محدد للتدخين"
+                    ],
+                    actions: [
+                        "شرب الماء عند الرغبة في التدخين",
+                        "ممارسة المشي 15 دقيقة يومياً",
+                        "تجنب الأماكن التي تحفز على التدخين"
+                    ],
+                    tip: i === 1 ? "ابدأ بتحديد أوقات معينة للتدخين فقط" :
+                         i === weeks ? "أنت قريب جداً من الإقلاع التام - استمر!" :
+                         `الأسبوع ${i}: استبدل سيجارة واحدة يومياً بنشاط صحي`
+                });
+            }
+            return plan;
+        }
+        
+        function generateTriggerStrategies(triggers) {
+            const strategies = [];
+            const triggerMap = {
+                "morning coffee": {
+                    trigger: "قهوة الصباح",
+                    replacement: "احتسِ القهوة في مكان مختلف، أو اشرب شاي أخضر بدلاً منها",
+                    quick_action: "خذ نفساً عميقاً 5 مرات"
+                },
+                "work stress": {
+                    trigger: "ضغط العمل",
+                    replacement: "خذ استراحة قصيرة للمشي أو تمارين التمدد",
+                    quick_action: "اشرب كوب ماء بارد وابتعد عن مكتبك لدقيقتين"
+                },
+                "after meals": {
+                    trigger: "بعد الأكل",
+                    replacement: "اغسل أسنانك مباشرة أو امضغ علكة خالية من السكر",
+                    quick_action: "قم بنزهة قصيرة لمدة 5 دقائق"
+                },
+                "friends": {
+                    trigger: "مع الأصدقاء",
+                    replacement: "اطلب مشروباً أو وجبة خفيفة بدلاً من السيجارة",
+                    quick_action: "أخبر أصدقاءك بقرارك واطلب دعمهم"
+                }
+            };
+            
+            triggers.forEach(t => {
+                if (triggerMap[t]) {
+                    strategies.push(triggerMap[t]);
+                }
+            });
+            
+            if (strategies.length === 0) {
+                strategies.push({
+                    trigger: "الرغبة العامة في التدخين",
+                    replacement: "اشرب ماء، تنفس عميقاً، أو مارس نشاطاً بدنياً خفيفاً",
+                    quick_action: "انتظر 5 دقائق - الرغبة ستختفي"
+                });
+            }
+            
+            return strategies;
+        }
+
+        window.analyzeCO = analyzeCO;
+
+        function renderRumorAI(out) {
+            $("rumorResultBox").classList.remove("hidden");
+            
+            const verdictColors = {
+                "True": "background: linear-gradient(135deg, #11998e, #38ef7d); color: #0a0e27;",
+                "False": "background: linear-gradient(135deg, #ff0844, #ff6b6b); color: white;",
+                "Misleading": "background: linear-gradient(135deg, #ff6b6b, #feca57); color: #0a0e27;",
+                "Unclear": "background: linear-gradient(135deg, #00d9f5, #a960ee); color: white;"
+            };
+            
+            const verdictBadge = $("rumorVerdict");
+            verdictBadge.textContent = `الحكم: ${out.verdict || "—"}`;
+            verdictBadge.setAttribute('style', verdictColors[out.verdict] || "");
+            
+            const riskColors = {
+                "Low": "background: linear-gradient(135deg, #11998e, #38ef7d); color: #0a0e27;",
+                "Moderate": "background: linear-gradient(135deg, #ff6b6b, #feca57); color: #0a0e27;",
+                "High": "background: linear-gradient(135deg, #ff0844, #ff6b6b); color: white;"
+            };
+            
+            const riskBadge = $("rumorRisk");
+            riskBadge.textContent = `الخطر: ${out.risk_level || "—"}`;
+            riskBadge.setAttribute('style', riskColors[out.risk_level] || "");
+            
+            $("rumorExplanation").textContent = out.explanation_simple || "";
+            $("rumorCorrection").textContent = out.correction || "";
+            $("rumorAdvice").textContent = out.advice || "";
+            
+            $("rumorRaw").textContent = JSON.stringify(out, null, 2);
+        }
+
+        async function checkRumor() {
+            if (!checkApiKey()) return;
+            
+            $("rumorStatus").textContent = "";
+            $("rumorStatus").className = "status-msg";
+            $("rumorResultBox").classList.add("hidden");
+
+            const claim = $("rumorText").value.trim();
+            
+            if (!claim) {
+                showError($("rumorStatus"), "يرجى إدخال المعلومة أولاً");
+                return;
+            }
+
+            $("rumorStatus").className = "status-msg";
+            $("rumorStatus").textContent = "🔄 جاري التحقق من المعلومة...";
+            
+            try {
+                const prompt = buildRumorPrompt(claim);
+                const text = await callGemini(prompt);
+                const out = safeParseJSON(text);
+                
+                renderRumorAI(out);
+                $("rumorStatus").className = "status-msg success";
+                $("rumorStatus").textContent = "✅ تم التحقق بنجاح!";
+            } catch (e) {
+                let errorMsg = "حدث خطأ";
+                let errorDetails = "";
+
+                if (e.message.includes("مفتاح API")) {
+                    errorMsg = "مفتاح API غير صالح";
+                    errorDetails = "احصل على مفتاح جديد من Google AI Studio";
+                } else if (e.message.includes("الإنترنت")) {
+                    errorMsg = "تعذر الاتصال بالإنترنت";
+                    errorDetails = "تحقق من اتصالك بالإنترنت";
+                } else {
+                    errorMsg = e.message;
+                }
+
+                showError($("rumorStatus"), errorMsg, errorDetails);
+                
+                if (e.message.includes("مفتاح")) {
+                    GEMINI_API_KEY = null;
+                    localStorage.removeItem('gemini_api_key');
+                    chosenModelName = null;
+                }
+            }
+        }
+
+        window.checkRumor = checkRumor;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            showSection("homeSection");
+            
+            if (!GEMINI_API_KEY) {
+                console.log("⚠️ لم يتم تكوين مفتاح API");
+            }
+        });
+    </script>
+</body>
+</html>
